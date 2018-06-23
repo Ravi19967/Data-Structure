@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int data;
+	struct node *link;	
+};
+
+struct node* ins_beg(struct node*head,int value)
+{
+	struct node *temp=head;
+	struct node *new = (struct node *)malloc(sizeof(struct node));
+	new->data=value;
+	new->link=head;
+	head=new;
+	return new;
+}
+
+struct node* ins_mid(struct node*head,int value)
+{
+	int pos;
+	struct node *temp=head;
+	struct node *new = (struct node *)malloc(sizeof(struct node));
+	new->data=value;
+	printf("enter postion to insert after: ");
+	scanf("%d",&pos);
+	while(pos)
+	{
+		temp=temp->link;
+		pos--;
+	}
+	new->link=temp->link;
+	temp->link=new;
+	return head;
+}
+
+struct node* ins_end(struct node*head,int value)
+{
+	struct node *temp=head;
+	struct node *new = (struct node *)malloc(sizeof(struct node));
+	new->data=value;
+	new->link=NULL;
+	while(temp->link)
+	{
+		temp=temp->link;
+	}
+	temp->link=new;
+	return head;
+}
+ 
+struct node *insertion(struct node *head)
+{
+	if(head == NULL)
+	{
+		int value;
+		printf("Enter input : ");
+		scanf("%d",&value);
+		struct node *new = (struct node *)malloc(sizeof(struct node));
+		new->data=value;
+		new->link=NULL;
+		return new;
+	}
+	else
+	{
+		int value,case_id;
+		struct node *temp;
+		printf("Enter input : ");
+		scanf("%d",&value);
+		scanf("%d",&case_id);
+		switch(case_id)
+		{
+			case 1 : temp=ins_beg(head,value);
+				 return temp;
+			case 2 : temp=ins_mid(head,value);
+				 return temp;
+			case 3 : temp=ins_end(head,value);
+				 return temp;
+		}	
+	}
+}
+
+
+int main()
+{
+	struct node*head=NULL;
+	head=insertion(head);
+	head=insertion(head);
+	head=insertion(head);
+	head=insertion(head);
+	printf("%d",head->link->link->data);	
+}
