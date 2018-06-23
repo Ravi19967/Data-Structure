@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<string.h>
+void *instr(char *s)
+{
+	int i=0;
+	while((s[i]=getchar())!='/')	
+	i++;
+	s[i]=s[i+1];
+}
+void astrcpy(char *s,char *t)
+{
+	while((*s++=*t++)!='\0');	
+}
+void astrcat(char *s,char *t)
+{
+	while(*s++ !='\0'){};
+	s=s-1;
+	while((*s++=*t++)!='\0');
+}
+int astrcmp(char *s,char *t)
+{
+	int value=0;
+	while(*s++ !='\0' && *t++ !='\0')	
+	{value= value + *s-*t;	printf("%d ",value);}			
+	return value;
+}
+char *reverse(char *s)
+{
+	int i=0,chr,len=0;
+	while(s[i++]!='\0'){len++;}
+	len = len - 1;
+	for(i=0;i<=len/2;i++)
+	{
+		chr=s[i];
+		s[i]=s[len-i];
+		s[len-i]=chr;
+	}
+	return s;
+}
+void itoa(int n,char *s)
+{
+	char sign;
+	int i=0,r;
+	if(n<0)
+	{sign='-';n=-n;}
+	else
+	sign=0;
+	while(n>0)
+	{
+		r=n%10;
+		s[i]=r+'0';
+		i++;
+		n=n/10;
+	}
+	if(sign=='-') {s[i]='-';s[i+1]='\0';}
+	else {s[i]='\0';}
+	s=reverse(s);
+}
+
+int atoi(char *s)
+{
+	int i=0;
+	int n=0;
+	while(s[i]!='\0')
+	{
+		n=n*10 + s[i]-'0';
+		i++;
+	}
+	if(s[0]=='-'){n=-n;}
+	return n;
+}
+void main()
+{
+	char s[10];
+	instr(s);	
+	printf("output: %s",s);	
+	char t[]="abc";
+	int n=123;
+	itoa(n,s);
+	printf("input: %4s\n",s);	
+	n=atoi(s);	
+	printf("output: %d",n);
+}
+
