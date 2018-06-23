@@ -1,0 +1,80 @@
+#include<stdio.h>
+#define Max 5
+struct queue
+{
+	int s1[Max];
+	int s2[Max];
+	int top1;
+	int top2;
+}que;
+void push(int item,int top,int *stack)
+{
+	if(top < Max - 1)
+	{
+		stack[++top]=item;
+	}
+	else
+	{
+		printf("Error stack is full \n");
+		return;
+	}
+}
+int pop(int top,int *stack)
+{
+	if(top > -1)
+	{
+		return stack[top];
+	}
+	else
+	{
+		printf("Error stack is empty \n");
+		return -1;
+	}
+}
+void insert(int value)
+{
+	push(value,que.top1,que.s1);
+	que.top1++;
+}
+int delete()
+{
+	int value;
+	if(que.top2 == -1)
+		if(que.top1 == -1)
+		{	
+			printf("Queue is empty");
+			return -1;
+		}
+		else 
+		{
+			while(que.top1 != -1)
+			{
+				value = pop(que.top1,que.s1);
+				que.top1--;
+				push(value,que.top2,que.s2);
+				que.top2++;
+			}
+			value=pop(que.top2,que.s2);
+			que.top2--;
+			return value;
+		}
+	else
+	{	value=pop(que.top2,que.s2);
+		que.top2--;
+		return value;
+	}
+}
+void main(void)
+{
+	que.top1= -1;
+	que.top2= -1;
+	insert(2);
+	insert(3);
+	int value=delete();
+	printf("%d",value);
+	insert(4);
+	value=delete();
+	printf("%d",value);
+	value=delete();
+	printf("%d",value);	
+}
