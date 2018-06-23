@@ -1,0 +1,51 @@
+#include<stdio.h>
+#define Max 5
+int stack[Max];
+int top = -1;
+
+void push(int item)
+{
+	if(top < Max - 1)
+	{
+		stack[++top]=item;
+	}
+	else
+	{
+		printf("Error stack is full \n");
+		return;
+	}
+}
+int pop()
+{
+	if(top > -1)
+	{
+		return stack[--top];
+	}
+	else
+	{
+		printf("Error stack is empty \n");
+		return -1;
+	}
+}
+void main(void)
+{
+	int item;
+	push(9);
+	push(8);
+	push(7);
+	push(6);
+	push(5);
+	push(4);
+	item=pop();
+	printf("%4d \n",item);
+	item=pop();
+	printf("%4d \n",item);
+	item=pop();
+	printf("%4d \n",item);
+	item=pop();
+	printf("%4d \n",item);
+	item=pop();
+	printf("%4d \n",item);
+	item=pop();
+	printf("%4d \n",item);
+}
