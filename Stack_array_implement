@@ -46,6 +46,4 @@ void main(void)
 	printf("%4d \n",item);
 	item=pop();
 	printf("%4d \n",item);
-	item=pop();
-	printf("%4d \n",item);
 }
