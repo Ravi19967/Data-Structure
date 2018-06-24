@@ -1,0 +1,159 @@
+//convert a operation to postfix and evaluate it
+#include<stdio.h>
+#include<ctype.h>
+
+#define max 10
+
+typedef char* string; 
+
+char stack_convpost[max];
+int top_convpost = -1;
+
+int stack_evalpost[max];
+int top_evalpost = -1;
+
+void push_convpost(char item)
+{
+	if(top_convpost !=max)
+	{
+		stack_convpost[++top_convpost]=item;
+	}		
+	else
+	{	
+		return;
+	}
+}
+char pop_convpost()
+{
+	char val;
+	if(top_convpost != -1)
+	{
+		val = stack_convpost[top_convpost--];
+		return val;
+	}	
+	else
+	{
+		return -1;
+	}
+}
+
+
+int priority(char val)
+{
+	if(val == '(')
+	return 0;
+	else if(val == '+' || val == '-')
+	return 1;
+	else if(val == '*' || val == '/')
+	return 2;
+}
+
+void postfix(string e,string r)
+{
+	char x;
+	while(*e)
+	{
+		if(isalnum(*e))
+		{	
+			*r=*e;
+			r++;
+		}
+		else if(*e == '(')
+		{
+			push_convpost('(');
+		}
+		else if(*e == ')')
+		{
+			while((x=pop_convpost())!='(')
+			{
+				*r=x;
+				r++;
+			}
+		}
+		else
+		{
+			while(priority(stack_convpost[top_convpost])>=priority(*e))
+			{
+				x=pop_convpost();
+				*r=x;
+				r++;
+			}
+			push_convpost(*e);
+		}
+		e++;	
+	}	
+	while((x=pop_convpost())!=-1)
+	{
+		*r=x;
+		r++;
+	}
+}
+
+void push_evalpost(int val)
+{
+	if(top_evalpost !=max)
+	{
+		stack_evalpost[++top_evalpost]=val;
+	}		
+	else
+	{	
+		return;
+	}
+}
+int pop_evalpost()
+{
+	int val;
+	if(top_evalpost != -1)
+	{
+		val = stack_evalpost[top_evalpost--];
+		return val;
+	}	
+	else
+	{
+		return -1;
+	}
+}
+
+
+int postfix_eval(string post)
+{	
+	int num;
+	while(*post)
+	{
+		if(isdigit(*post))
+		{
+			num = *post - 48;
+			push_evalpost(num);
+		}
+		else
+		{
+			int n1,n2,n3;
+			n1= pop_evalpost();
+			n2 =pop_evalpost();
+			switch(*post)
+			{
+				case '+' : {n3 = n1+n2; break;}
+				case '-' : {n3 = n1-n2; break;}
+				case '*' : {n3 = n1*n2; break;}
+				case '/' : {n3 = n1/n2; break;}	
+			}
+			push_evalpost(n3);
+		}
+		post++;	
+	}	
+	num=pop_evalpost();
+	return num;
+}
+
+void main(void)
+{
+	char in[max];
+	char post[max];
+	int result;
+	string s=in;
+	string inter_res=post;
+	scanf("%s",s);
+	postfix(s,inter_res);	
+	result = postfix_eval(post);
+	printf("%d",result);
+}
